@@ -1,5 +1,7 @@
 import re
 from urllib.parse import urlparse
+from lxml import etree
+from io import *
 
 def scraper(url, resp):
     links = extract_next_links(url, resp)
@@ -7,8 +9,12 @@ def scraper(url, resp):
 
 def extract_next_links(url, resp):
     # Implementation requred.
-    print(type(resp))
-    print(resp.raw_response)
+    # print(type(resp))
+    html = resp.raw_response.content.decode('utf-8')
+    parser = etree.HTMLParser()
+    tree = etree.parse(StringIO(html), parser)
+    print(tree)
+    # print(type(html))
     print("HELLO JKLJKLJKLDFJKL:SJDFKL:DS SUP")
     return list()
 
