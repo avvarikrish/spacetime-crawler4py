@@ -1,11 +1,13 @@
 import re
 from urllib.parse import urlparse
-from lxml import etree, html
+from lxml import etree
 from io import *
 
 def scraper(url, resp):
     links = extract_next_links(url, resp)
     # print([link for link in links if is_valid(link)])
+    for link in [link for link in links if is_valid(link)]:
+        print(link)
     return [link for link in links if is_valid(link)]
 
 def extract_next_links(url, resp):
@@ -15,33 +17,28 @@ def extract_next_links(url, resp):
     #     print(type(resp.status))
     #     print(url)
     final = []
+    parsed = urlparse(url)
     # if re.match(r".*\.php.*", url):
     #     return []
-    if 200 == resp.status:
-        print(url)
+    if 200 <= resp.status <= 599:
         html = resp.raw_response.content.decode('utf-8')
         parser = etree.HTMLParser()
         tree = etree.parse(StringIO(html), parser)
         root = tree.getroot()
         for i in root.xpath('/html')[0].getiterator('a'):
-            # if 'href' in i.attrib:
-            #     count += 1
-            #     print(i.attrib['href'])
-            #     print()
             url_dict = i.attrib
             if 'href' in url_dict:
-                print(url_dict)
                 curr_url = url_dict['href']
-                print(curr_url)
+                final_url = ''
                 if len(curr_url) >= 2 and curr_url[0] == '/' and curr_url[1] != '/':
-                    # print(url+curr_url)
-                    if not re.match(r".*\.php.*", url):
-                        final.append(url + curr_url)
+                    final_url = parsed.scheme + '://' + parsed.netloc + curr_url
                 elif curr_url[0] != '/' and curr_url[0] != '#':
-                    # print(curr_url)
-                    final.append(curr_url)
-        # print()
-        # print('-------------------------------------------------------------------------------------------------------------------------------------------')
+                    final_url = curr_url
+                if urlparse(final_url).fragment != '':
+                    final.append(final_url.split('#')[0])
+                else:
+                    final.append(final_url)
+    print(final)
     return final
 
 
@@ -54,6 +51,7 @@ def is_valid(url):
             r".*\.(ics|cs|informatics|stat)\.uci\.edu\/.*|today\.uci\.edu\/department\/information_computer_sciences\/.*$",
             url
         )
+        # print(url, parsed.path)
         return match_domains and not re.match(
             r".*\.(css|js|bmp|gif|jpe?g|ico"
             + r"|png|tiff?|mid|mp2|mp3|mp4"
