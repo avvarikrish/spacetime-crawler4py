@@ -23,13 +23,11 @@ def extract_next_links(url, resp):
                 final_url = ''
                 if len(curr_url) >= 2 and curr_url[0] == '/' and curr_url[1] != '/':
                     final_url = parsed.scheme + '://' + parsed.netloc + curr_url
-                elif curr_url[0] != '/' and curr_url[0] != '#':
+                elif len(curr_url) > 0 and curr_url[0] != '/' and curr_url[0] != '#':
                     final_url = curr_url
-                if urlparse(final_url).fragment != '':
-                    final.append(final_url.split('#')[0])
-                else:
-                    final.append(final_url)
-    print(final)
+                split_value = final_url.split('#')[0]
+                if split_value != '':
+                    final.append(split_value)
     return final
 
 
