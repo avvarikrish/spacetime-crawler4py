@@ -10,25 +10,31 @@ def scraper(url, resp):
 def extract_next_links(url, resp):
     # Implementation requred.
     final = []
-    parsed = urlparse(url)
-    if 200 <= resp.status <= 599:
-        html = resp.raw_response.content.decode('utf-8')
-        parser = etree.HTMLParser()
-        tree = etree.parse(StringIO(html), parser)
-        root = tree.getroot()
-        for i in root.xpath('/html')[0].getiterator('a'):
-            url_dict = i.attrib
-            if 'href' in url_dict:
-                curr_url = url_dict['href']
-                final_url = ''
-                if len(curr_url) >= 2 and curr_url[0] == '/' and curr_url[1] != '/':
-                    final_url = parsed.scheme + '://' + parsed.netloc + curr_url
-                elif len(curr_url) > 0 and curr_url[0] != '/' and curr_url[0] != '#':
-                    final_url = curr_url
-                split_value = final_url.split('#')[0]
-                if split_value != '':
-                    final.append(split_value)
-    return final
+    try:
+        parsed = urlparse(url)
+        if 200 <= resp.status <= 599:
+            html = resp.raw_response.content.decode('utf-8')
+            parser = etree.HTMLParser()
+            tree = etree.parse(StringIO(html), parser)
+            root = tree.getroot()
+            for i in root.xpath('/html')[0].getiterator('a'):
+                url_dict = i.attrib
+                if 'href' in url_dict:
+                    curr_url = url_dict['href']
+                    final_url = ''
+                    if len(curr_url) >= 2 and curr_url[0] == '/' and curr_url[1] != '/':
+                        final_url = parsed.scheme + '://' + parsed.netloc + curr_url
+                    elif len(curr_url) > 0 and curr_url[0] != '/' and curr_url[0] != '#':
+                        final_url = curr_url
+                    split_value = final_url.split('#')[0]
+                    if split_value != '':
+                        final.append(split_value)
+    except Exception as e:
+        print('ERROR OCCURED')
+        with open('Error_file.txt', 'a+') as f:
+            f.write(str(type(e)) + ' ' + str(e) + '\n')
+    finally:
+        return final
 
 
 def is_valid(url):
