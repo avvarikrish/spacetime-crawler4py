@@ -5,21 +5,12 @@ from io import *
 
 def scraper(url, resp):
     links = extract_next_links(url, resp)
-    # print([link for link in links if is_valid(link)])
-    for link in [link for link in links if is_valid(link)]:
-        print(link)
     return [link for link in links if is_valid(link)]
 
 def extract_next_links(url, resp):
     # Implementation requred.
-    # print(type(resp))
-    # if resp.raw_response == None:
-    #     print(type(resp.status))
-    #     print(url)
     final = []
     parsed = urlparse(url)
-    # if re.match(r".*\.php.*", url):
-    #     return []
     if 200 <= resp.status <= 599:
         html = resp.raw_response.content.decode('utf-8')
         parser = etree.HTMLParser()
