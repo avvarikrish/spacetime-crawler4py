@@ -1,34 +1,71 @@
 import re
 from urllib.parse import urlparse
+from urllib.robotparser import RobotFileParser
 from lxml import etree
 from io import *
+
+
+robots = {}
+
 
 def scraper(url, resp):
     links = extract_next_links(url, resp)
     return [link for link in links if is_valid(link)]
 
+
+def add_robot(base_url):
+
+    # Adds the robots.txt in a global dictionary, returning the read robot.txt
+    if base_url not in robots:
+        robots_file = RobotFileParser()
+        robots_file.set_url(base_url)
+        robots_file.read()
+        robots[base_url] = robots_file
+
+    return robots[base_url]
+
+
 def extract_next_links(url, resp):
-    # Implementation requred.
+    # Implementation required.
     final = []
     try:
         parsed = urlparse(url)
         if 200 <= resp.status <= 599:
+
+            # gets the html root
             html = resp.raw_response.content.decode('utf-8')
             parser = etree.HTMLParser()
             tree = etree.parse(StringIO(html), parser)
             root = tree.getroot()
-            for i in root.xpath('/html')[0].getiterator('a'):
-                url_dict = i.attrib
-                if 'href' in url_dict:
-                    curr_url = url_dict['href']
-                    final_url = ''
-                    if len(curr_url) >= 2 and curr_url[0] == '/' and curr_url[1] != '/':
-                        final_url = parsed.scheme + '://' + parsed.netloc + curr_url
-                    elif len(curr_url) > 0 and curr_url[0] != '/' and curr_url[0] != '#':
-                        final_url = curr_url
-                    split_value = final_url.split('#')[0]
-                    if split_value != '':
-                        final.append(split_value)
+
+            # creates a robots url for the parser
+            base_url = parsed.scheme + '://' + parsed.netloc + '/robots.txt'
+            dick_robot = add_robot(base_url)
+
+            # checks to see if the url is able to be fetched in within the domain, based on the robots.txt
+            if dick_robot.can_fetch('*', url):
+
+                # loops through all <a> tag
+                for i in root.xpath('/html')[0].getiterator('a'):
+
+                    url_dict = i.attrib
+
+                    # gets the href of the <a> tag
+                    if 'href' in url_dict:
+                        curr_url = url_dict['href']
+                        final_url = ''
+
+                        # creates the url to put in the frontier
+                        if len(curr_url) >= 2 and curr_url[0] == '/' and curr_url[1] != '/':
+                            final_url = parsed.scheme + '://' + parsed.netloc + curr_url
+                        elif len(curr_url) > 0 and curr_url[0] != '/' and curr_url[0] != '#':
+                            final_url = curr_url
+
+                        # removes the fragment from the url
+                        split_value = final_url.split('#')[0]
+                        if split_value != '':
+                            final.append(split_value)
+
     except Exception as e:
         print('ERROR OCCURED')
         with open('Error_file.txt', 'a+') as f:
