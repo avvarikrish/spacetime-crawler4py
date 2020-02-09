@@ -40,10 +40,13 @@ def extract_next_links(url, resp):
 
             # creates a robots url for the parser
             base_url = parsed.scheme + '://' + parsed.netloc + '/robots.txt'
-            dick_robot = add_robot(base_url)
+            robot_parser = add_robot(base_url)
+
+
+            print(robot_parser.request_rate('*'))
 
             # checks to see if the url is able to be fetched in within the domain, based on the robots.txt
-            if dick_robot.can_fetch('*', url):
+            if robot_parser.can_fetch('*', url):
 
                 # loops through all <a> tag
                 for i in root.xpath('/html')[0].getiterator('a'):
