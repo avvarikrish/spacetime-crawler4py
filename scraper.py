@@ -18,7 +18,9 @@ def scraper(url, resp):
 
 def extract_next_links(url, resp):
     # Implementation required.
-    print(url ,' ------------------------------------------- ')
+    if 'informatics' in url:
+        print(url)
+    # print(url ,' ------------------------------------------- ')
     final = []
 
     try:
@@ -26,6 +28,7 @@ def extract_next_links(url, resp):
         resp_type = resp.raw_response.headers['Content-Type'].split(';')[0]
         with open('response_types.txt', 'a+') as f:
             f.write(resp_type + ' ' + url + '\n')
+
         if 200 <= resp.status <= 599 and resp_type == 'text/html':
 
             # gets the html root
@@ -36,27 +39,32 @@ def extract_next_links(url, resp):
 
             # creates a robots url for the parser
 
-            print(resp_type)
+            # print(resp_type)
             tag_count = 0
             text_tag_count = 0
             word_count = 0
             for i in root.xpath('/html')[0].getiterator('*'):
-                print(i.tag)
+                # print(i.tag)
                 if i.tag in {'p', 'h1', 'h2', 'h3'}:
                     text_tag_count += 1
                     if i.text is not None:
                         word_count += len(i.text.split())
                 tag_count += 1
                 
-            print(word_count)
-            print(text_tag_count/tag_count)
+            # print(word_count)
+            # print(text_tag_count/tag_count)
 
             # checks to see if the url is able to be fetched in within the domain, based on the robots.txt
 
             # loops through all <a> tag
             # for i in root.xpath('/html')[0].getiterator('p'):
             #     print(i.text)
+            # if word_count >= 200:
+            print(word_count, 'word count')
+            print(tag_count, 'tag count')
+            print((word_count+text_tag_count)/(tag_count+word_count))
             for i in root.xpath('/html')[0].getiterator('a'):
+
 
                 url_dict = i.attrib
                 # gets the href of the <a> tag
@@ -65,13 +73,15 @@ def extract_next_links(url, resp):
                     final_url = ''
 
                     # creates the url to put in the frontier
-                    if len(curr_url) >= 2 and curr_url[0] == '/' and curr_url[1] == '/':
-                        final_url = 'https:' + curr_url
-                        print(final_url)
-                    elif len(curr_url) >= 2 and curr_url[0] == '/' and curr_url[1] != '/':
+                    # if len(curr_url) >= 2 and curr_url[0] == '/' and curr_url[1] == '/':
+                    #     final_url = 'https:' + curr_url
+                        # print(final_url)
+                    if len(curr_url) >= 2 and curr_url[0] == '/' and curr_url[1] != '/':
                         final_url = parsed.scheme + '://' + parsed.netloc + curr_url
                     elif len(curr_url) > 0 and curr_url[0] != '/' and curr_url[0] != '#':
                         final_url = curr_url
+
+
 
                     # removes the fragment from the url
                     split_value = final_url.split('#')[0]
