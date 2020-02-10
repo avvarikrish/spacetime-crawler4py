@@ -59,7 +59,7 @@ def extract_next_links(url, resp):
                     if i.text is not None:
                         word_count += len(i.text.split())
                 tag_count += 1
-
+                
             print(word_count)
             print(text_tag_count/tag_count)
 
@@ -78,7 +78,10 @@ def extract_next_links(url, resp):
                         final_url = ''
 
                         # creates the url to put in the frontier
-                        if len(curr_url) >= 2 and curr_url[0] == '/' and curr_url[1] != '/':
+                        if len(curr_url) >= 2 and curr_url[0] == '/' and curr_url[1] == '/':
+                            final_url = 'https:' + curr_url
+                            print(final_url)
+                        elif len(curr_url) >= 2 and curr_url[0] == '/' and curr_url[1] != '/':
                             final_url = parsed.scheme + '://' + parsed.netloc + curr_url
                         elif len(curr_url) > 0 and curr_url[0] != '/' and curr_url[0] != '#':
                             final_url = curr_url
