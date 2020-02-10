@@ -1,11 +1,10 @@
 import re
 from urllib.parse import urlparse
-from urllib.robotparser import RobotFileParser
 from lxml import etree, html
 from io import *
 
 
-robots = {}
+
 BLACKLIST_RESP_TYPES = {'text/calendar'}
 
 
@@ -14,16 +13,7 @@ def scraper(url, resp):
     return [link for link in links if is_valid(link)]
 
 
-def add_robot(base_url):
 
-    # Adds the robots.txt in a global dictionary, returning the read robot.txt
-    if base_url not in robots:
-        robots_file = RobotFileParser()
-        robots_file.set_url(base_url)
-        robots_file.read()
-        robots[base_url] = robots_file
-
-    return robots[base_url]
 
 
 def extract_next_links(url, resp):
@@ -35,8 +25,8 @@ def extract_next_links(url, resp):
         parsed = urlparse(url)
         resp_type = resp.raw_response.headers['Content-Type'].split(';')[0]
         with open('response_types.txt', 'a+') as f:
-            f.write(resp_type + '\n')
-        if 200 <= resp.status <= 599:
+            f.write(resp_type + ' ' + url + '\n')
+        if 200 <= resp.status <= 599 and resp_type == 'text/html':
 
             # gets the html root
             html_value = resp.raw_response.content.decode('utf-8')
@@ -45,8 +35,6 @@ def extract_next_links(url, resp):
             root = tree.getroot()
 
             # creates a robots url for the parser
-            base_url = parsed.scheme + '://' + parsed.netloc + '/robots.txt'
-            robot_parser = add_robot(base_url)
 
             print(resp_type)
             tag_count = 0
@@ -64,32 +52,31 @@ def extract_next_links(url, resp):
             print(text_tag_count/tag_count)
 
             # checks to see if the url is able to be fetched in within the domain, based on the robots.txt
-            if robot_parser.can_fetch('*', url):
 
-                # loops through all <a> tag
-                # for i in root.xpath('/html')[0].getiterator('p'):
-                #     print(i.text)
-                for i in root.xpath('/html')[0].getiterator('a'):
+            # loops through all <a> tag
+            # for i in root.xpath('/html')[0].getiterator('p'):
+            #     print(i.text)
+            for i in root.xpath('/html')[0].getiterator('a'):
 
-                    url_dict = i.attrib
-                    # gets the href of the <a> tag
-                    if 'href' in url_dict:
-                        curr_url = url_dict['href']
-                        final_url = ''
+                url_dict = i.attrib
+                # gets the href of the <a> tag
+                if 'href' in url_dict:
+                    curr_url = url_dict['href']
+                    final_url = ''
 
-                        # creates the url to put in the frontier
-                        if len(curr_url) >= 2 and curr_url[0] == '/' and curr_url[1] == '/':
-                            final_url = 'https:' + curr_url
-                            print(final_url)
-                        elif len(curr_url) >= 2 and curr_url[0] == '/' and curr_url[1] != '/':
-                            final_url = parsed.scheme + '://' + parsed.netloc + curr_url
-                        elif len(curr_url) > 0 and curr_url[0] != '/' and curr_url[0] != '#':
-                            final_url = curr_url
+                    # creates the url to put in the frontier
+                    if len(curr_url) >= 2 and curr_url[0] == '/' and curr_url[1] == '/':
+                        final_url = 'https:' + curr_url
+                        print(final_url)
+                    elif len(curr_url) >= 2 and curr_url[0] == '/' and curr_url[1] != '/':
+                        final_url = parsed.scheme + '://' + parsed.netloc + curr_url
+                    elif len(curr_url) > 0 and curr_url[0] != '/' and curr_url[0] != '#':
+                        final_url = curr_url
 
-                        # removes the fragment from the url
-                        split_value = final_url.split('#')[0]
-                        if split_value != '':
-                            final.append(split_value)
+                    # removes the fragment from the url
+                    split_value = final_url.split('#')[0]
+                    if split_value != '':
+                        final.append(split_value)
 
     except Exception as e:
         print('ERROR OCCURED')
