@@ -44,7 +44,7 @@ def extract_next_links(url, resp):
             word_count = 0
             for i in root.xpath('/html')[0].getiterator('*'):
                 # print(i.tag)
-                if i.tag in {'a', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'b'}:
+                if i.tag in {'a', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'b', 'br'}:
                     text_tag_count += 1
                     if i.text is not None:
                         word_count += len(i.text.split())

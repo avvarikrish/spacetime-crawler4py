@@ -20,12 +20,15 @@ class Worker(Thread):
 
     def add_robot(self, base_url):
 
+        resp = download(base_url,self.config, self.logger)
+
+        robot_list = resp.raw_response.content.decode().split("\n")
         # Adds the robots.txt in a global dictionary, returning the read robot.txt
         if base_url not in self.robots:
             robots_file = RobotFileParser()
-            robots_file.set_url(base_url)
-            robots_file.read()
+            robots_file.parse(robot_list)
             self.robots[base_url] = robots_file
+            
         return self.robots[base_url]
         
     def run(self):
