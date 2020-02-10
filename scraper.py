@@ -1,11 +1,12 @@
 import re
 from urllib.parse import urlparse
 from urllib.robotparser import RobotFileParser
-from lxml import etree
+from lxml import etree, html
 from io import *
 
 
 robots = {}
+BLACKLIST_RESP_TYPES = {'text/calendar'}
 
 
 def scraper(url, resp):
@@ -27,32 +28,50 @@ def add_robot(base_url):
 
 def extract_next_links(url, resp):
     # Implementation required.
+    print(url ,' ------------------------------------------- ')
     final = []
+
     try:
         parsed = urlparse(url)
+        resp_type = resp.raw_response.headers['Content-Type'].split(';')[0]
+        with open('response_types.txt', 'a+') as f:
+            f.write(resp_type + '\n')
         if 200 <= resp.status <= 599:
 
             # gets the html root
-            html = resp.raw_response.content.decode('utf-8')
+            html_value = resp.raw_response.content.decode('utf-8')
             parser = etree.HTMLParser()
-            tree = etree.parse(StringIO(html), parser)
+            tree = etree.parse(StringIO(html_value), parser)
             root = tree.getroot()
 
             # creates a robots url for the parser
             base_url = parsed.scheme + '://' + parsed.netloc + '/robots.txt'
             robot_parser = add_robot(base_url)
 
+            print(resp_type)
+            tag_count = 0
+            text_tag_count = 0
+            word_count = 0
+            for i in root.xpath('/html')[0].getiterator('*'):
+                print(i.tag)
+                if i.tag in {'p', 'h1', 'h2', 'h3'}:
+                    text_tag_count += 1
+                    if i.text is not None:
+                        word_count += len(i.text.split())
+                tag_count += 1
 
-            print(robot_parser.request_rate('*'))
+            print(word_count)
+            print(text_tag_count/tag_count)
 
             # checks to see if the url is able to be fetched in within the domain, based on the robots.txt
             if robot_parser.can_fetch('*', url):
 
                 # loops through all <a> tag
+                # for i in root.xpath('/html')[0].getiterator('p'):
+                #     print(i.text)
                 for i in root.xpath('/html')[0].getiterator('a'):
 
                     url_dict = i.attrib
-
                     # gets the href of the <a> tag
                     if 'href' in url_dict:
                         curr_url = url_dict['href']
