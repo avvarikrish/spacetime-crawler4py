@@ -15,6 +15,9 @@ class Worker(Thread):
         self.robots = {}
         super().__init__(daemon=True)
 
+    # def read_robot(self, text_file, content_type):
+
+
     def add_robot(self, base_url):
 
         # Adds the robots.txt in a global dictionary, returning the read robot.txt
@@ -23,7 +26,6 @@ class Worker(Thread):
             robots_file.set_url(base_url)
             robots_file.read()
             self.robots[base_url] = robots_file
-
         return self.robots[base_url]
         
     def run(self):
@@ -35,6 +37,7 @@ class Worker(Thread):
             try:
                 parsed = urlparse(tbd_url)
                 base_url = parsed.scheme + '://' + parsed.netloc + '/robots.txt'
+                print('BASE_URL', base_url)
                 robot_parser = self.add_robot(base_url)
                 if robot_parser.can_fetch('*', tbd_url):
                     resp = download(tbd_url, self.config, self.logger)
@@ -45,6 +48,9 @@ class Worker(Thread):
                     for scraped_url in scraped_urls:
                         self.frontier.add_url(scraped_url)
                     self.frontier.mark_url_complete(tbd_url)
+                    crawl_delay = robot_parser.crawl_delay('*')
+                    if crawl_delay is not None:
+                        time.sleep(crawl_delay)
                     time.sleep(self.config.time_delay)
             except Exception as e:
                 print('ERROR OCCURED')

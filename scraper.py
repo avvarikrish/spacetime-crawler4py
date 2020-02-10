@@ -13,9 +13,6 @@ def scraper(url, resp):
     return [link for link in links if is_valid(link)]
 
 
-
-
-
 def extract_next_links(url, resp):
     # Implementation required.
     if 'informatics' in url:
@@ -39,7 +36,7 @@ def extract_next_links(url, resp):
 
             # creates a robots url for the parser
 
-            # print(resp_type)
+            # print(root.xpath('//text()'))
             tag_count = 0
             text_tag_count = 0
             word_count = 0
@@ -50,6 +47,7 @@ def extract_next_links(url, resp):
                     if i.text is not None:
                         word_count += len(i.text.split())
                 tag_count += 1
+
                 
             # print(word_count)
             # print(text_tag_count/tag_count)
@@ -60,11 +58,11 @@ def extract_next_links(url, resp):
             # for i in root.xpath('/html')[0].getiterator('p'):
             #     print(i.text)
             # if word_count >= 200:
-            print(word_count, 'word count')
-            print(tag_count, 'tag count')
-            print((word_count+text_tag_count)/(tag_count+word_count))
-            for i in root.xpath('/html')[0].getiterator('a'):
+            # print(word_count, 'word count')
+            # print(tag_count, 'tag count')
+            # print((word_count+text_tag_count)/(tag_count+word_count))
 
+            for i in root.xpath('/html')[0].getiterator('a'):
 
                 url_dict = i.attrib
                 # gets the href of the <a> tag
@@ -73,15 +71,12 @@ def extract_next_links(url, resp):
                     final_url = ''
 
                     # creates the url to put in the frontier
-                    # if len(curr_url) >= 2 and curr_url[0] == '/' and curr_url[1] == '/':
-                    #     final_url = 'https:' + curr_url
-                        # print(final_url)
-                    if len(curr_url) >= 2 and curr_url[0] == '/' and curr_url[1] != '/':
+                    if len(curr_url) >= 2 and curr_url[0] == '/' and curr_url[1] == '/':
+                        final_url = 'https:' + curr_url
+                    elif len(curr_url) >= 2 and curr_url[0] == '/' and curr_url[1] != '/':
                         final_url = parsed.scheme + '://' + parsed.netloc + curr_url
                     elif len(curr_url) > 0 and curr_url[0] != '/' and curr_url[0] != '#':
                         final_url = curr_url
-
-
 
                     # removes the fragment from the url
                     split_value = final_url.split('#')[0]
