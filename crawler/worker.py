@@ -22,11 +22,14 @@ class Worker(Thread):
 
         resp = download(base_url,self.config, self.logger)
 
-        robot_list = resp.raw_response.content.decode().split("\n")
+        if resp.raw_response is not None:
+            robot_list = resp.raw_response.content.decode().split("\n")
+
         # Adds the robots.txt in a global dictionary, returning the read robot.txt
         if base_url not in self.robots:
             robots_file = RobotFileParser()
-            robots_file.parse(robot_list)
+            if resp.raw_response is not None and resp.status != 404:
+                robots_file.parse(robot_list)
             self.robots[base_url] = robots_file
             
         return self.robots[base_url]
@@ -42,7 +45,7 @@ class Worker(Thread):
                 base_url = parsed.scheme + '://' + parsed.netloc + '/robots.txt'
                 print('BASE_URL', base_url)
                 robot_parser = self.add_robot(base_url)
-                if robot_parser.can_fetch('*', tbd_url):
+                if robot_parser.default_entry is None or (robot_parser.default_entry is not None and robot_parser.can_fetch('*', tbd_url)):
                     resp = download(tbd_url, self.config, self.logger)
                     self.logger.info(
                         f"Downloaded {tbd_url}, status <{resp.status}>, "
@@ -51,7 +54,8 @@ class Worker(Thread):
                     for scraped_url in scraped_urls:
                         self.frontier.add_url(scraped_url)
                     self.frontier.mark_url_complete(tbd_url)
-                    crawl_delay = robot_parser.crawl_delay('*')
+                    if robot_parser.default_entry is not None:
+                        crawl_delay = robot_parser.crawl_delay('*')
                     if crawl_delay is not None:
                         time.sleep(crawl_delay)
                     time.sleep(self.config.time_delay)

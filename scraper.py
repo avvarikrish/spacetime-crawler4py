@@ -23,14 +23,16 @@ def extract_next_links(url, resp):
     try:
         # separate the url into important parts for parsing
         parsed = urlparse(url)
+        resp_type = ''
 
         # finds the content type of the url
-        resp_type = resp.raw_response.headers['Content-Type'].split(';')[0]
-        with open('response_types.txt', 'a+') as f:
-            f.write(resp_type + ' ' + url + '\n')
+        if resp.raw_response is not None and resp.raw_response.headers['Content-Type'] is not None:
+            resp_type = resp.raw_response.headers['Content-Type'].split(';')[0]
+            with open('response_types.txt', 'a+') as f:
+                f.write(resp_type + ' ' + url + '\n')
 
         # checks the resp.status and only goes through the if statement if the content type is an html
-        if 200 <= resp.status <= 599 and resp_type == 'text/html':
+        if 200 <= resp.status <= 599 and resp_type == 'text/html' and resp.raw_response is not None:
 
             # gets the html root, library calls to parse through html
             html_value = resp.raw_response.content.decode('utf-8')
@@ -60,7 +62,7 @@ def extract_next_links(url, resp):
             temp_sim = Simhash(val)
 
             for i in SIMHASH_URLS:
-                if i.distance(temp_sim) <= 5:
+                if i.distance(temp_sim) <= 3:
                     dup = True
                     break
 
@@ -77,7 +79,7 @@ def extract_next_links(url, resp):
             # print(tag_count, 'tag count')
             # print((word_count+text_tag_count)/(tag_count+word_count))
 
-            if not dup:
+            if word_count >= 150 and not dup:
 
                 SIMHASH_URLS.add(temp_sim)
 
