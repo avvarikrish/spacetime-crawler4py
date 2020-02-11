@@ -1,10 +1,11 @@
 import re
 from urllib.parse import urlparse
 from lxml import etree, html
+from simhash import Simhash
 from io import *
 
 
-
+SIMHASH_URLS = set()
 BLACKLIST_RESP_TYPES = {'text/calendar'}
 
 
@@ -39,16 +40,29 @@ def extract_next_links(url, resp):
 
             # creates a robots url for the parser
             # variables initialized for word and tag count, determining if pages are relevant or not
+            dup = False
             tag_count = 0
             text_tag_count = 0
             word_count = 0
+            word = []
+
             for i in root.xpath('/html')[0].getiterator('*'):
                 # print(i.tag)
                 if i.tag in {'a', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'b', 'br'}:
                     text_tag_count += 1
                     if i.text is not None:
+                        word.append(i.text)
                         word_count += len(i.text.split())
                 tag_count += 1
+
+            val = ''.join(word)
+            # print(val)
+            temp_sim = Simhash(val)
+
+            for i in SIMHASH_URLS:
+                if i.distance(temp_sim) <= 5:
+                    dup = True
+                    break
 
             print(word_count)
             print(text_tag_count/tag_count)
@@ -63,7 +77,10 @@ def extract_next_links(url, resp):
             # print(tag_count, 'tag count')
             # print((word_count+text_tag_count)/(tag_count+word_count))
 
-            if word_count >= 150:
+            if not dup:
+
+                SIMHASH_URLS.add(temp_sim)
+
                 for i in root.xpath('/html')[0].getiterator('a'):
 
                     url_dict = i.attrib
