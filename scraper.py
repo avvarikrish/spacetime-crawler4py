@@ -50,7 +50,10 @@ def extract_next_links(url, resp):
 
             for i in root.xpath('/html')[0].getiterator('*'):
                 # print(i.tag)
-                if i.tag in {'a', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'b', 'br'}:
+                if i.tag in {"p", "span", "blockquote", "code", "ol", "ins", "sub", "sup", "h1", "h2", "h3", "h4", "h5",
+                             "h6", "li", "ul", "title", "b", "strong", "em", "i", "small", "sub", "sup", "ins", "del",
+                             "mark", "pre", "a", "br"}:
+                # if i.tag in {'a', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'b', 'br'}:
                     text_tag_count += 1
                     if i.text is not None:
                         word.append(i.text)
@@ -62,7 +65,7 @@ def extract_next_links(url, resp):
             temp_sim = Simhash(val)
 
             for i in SIMHASH_URLS:
-                if i.distance(temp_sim) <= 3:
+                if i.distance(temp_sim) <= 4:
                     dup = True
                     break
 
@@ -108,7 +111,7 @@ def extract_next_links(url, resp):
     except Exception as e:
         print('ERROR OCCURED')
         with open('Error_file.txt', 'a+') as f:
-            f.write(str(type(e)) + ' ' + str(e) + '\n')
+            f.write(str(type(e)) + ' ' + str(e) + ' ' + str(url) + '\n')
     finally:
         return final
 
@@ -118,12 +121,16 @@ def is_valid(url):
         parsed = urlparse(url)
         if parsed.scheme not in set(["http", "https"]):
             return False
+        match_links = not re.match(r".*(share=|replytocom=).*", url)
         match_domains = re.match(
             r".*\.(ics|cs|informatics|stat)\.uci\.edu\/.*|today\.uci\.edu\/department\/information_computer_sciences\/.*$",
             url
         )
+        # print(re.match(r".*(share=|replytocom=).*", 'https://evoke.ics.uci.edu/hollowing-i-in-the-authorship-of-letters-a-note-on-flusser-and-surveillance/?replytocom=38622'))
         # print(url, parsed.path)
-        return match_domains and not re.match(
+        # print('MATCH_LINKS', match_links, url)
+        # print('MATCH_DOMAINS', match_domains, url)
+        return match_links and match_domains and not re.match(
             r".*\.(css|js|bmp|gif|jpe?g|ico"
             + r"|png|tiff?|mid|mp2|mp3|mp4"
             + r"|wav|avi|mov|mpeg|ram|m4v|mkv|ogg|ogv|pdf"
