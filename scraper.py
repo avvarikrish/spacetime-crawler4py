@@ -82,7 +82,7 @@ def extract_next_links(url, resp):
             # print(tag_count, 'tag count')
             # print((word_count+text_tag_count)/(tag_count+word_count))
 
-            if word_count >= 150 and not dup:
+            if not dup:
 
                 SIMHASH_URLS.add(temp_sim)
 

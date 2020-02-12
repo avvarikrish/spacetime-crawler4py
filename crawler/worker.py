@@ -37,6 +37,11 @@ class Worker(Thread):
     def run(self):
         while True:
             tbd_url = self.frontier.get_tbd_url()
+            print(tbd_url)
+            if tbd_url in ['https://www.ics.uci.edu','https://www.cs.uci.edu','https://www.informatics.uci.edu','https://www.stat.uci.edu','https://today.uci.edu/department/information_computer_sciences']:
+                print('sup')
+                with open('Error_file.txt', 'a+') as f:
+                    f.write('\n\n\n\n\n\n' + 'SEED_URL : ' + str(tbd_url) + '\n')
             if not tbd_url:
                 self.logger.info("Frontier is empty. Stopping Crawler.")
                 break
@@ -54,6 +59,7 @@ class Worker(Thread):
                     for scraped_url in scraped_urls:
                         self.frontier.add_url(scraped_url)
                     self.frontier.mark_url_complete(tbd_url)
+                    crawl_delay = None
                     if robot_parser.default_entry is not None:
                         crawl_delay = robot_parser.crawl_delay('*')
                     if crawl_delay is not None:
