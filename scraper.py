@@ -31,6 +31,7 @@ def extract_next_links(url, resp):
             with open('response_types.txt', 'a+') as f:
                 f.write(resp_type + ' ' + url + '\n')
 
+        print(resp.status)
         # checks the resp.status and only goes through the if statement if the content type is an html
         if 200 <= resp.status <= 599 and resp_type == 'text/html' and resp.raw_response is not None:
 
@@ -53,7 +54,6 @@ def extract_next_links(url, resp):
                 if i.tag in {"p", "span", "blockquote", "code", "ol", "ins", "sub", "sup", "h1", "h2", "h3", "h4", "h5",
                              "h6", "li", "ul", "title", "b", "strong", "em", "i", "small", "sub", "sup", "ins", "del",
                              "mark", "pre", "a", "br"}:
-                # if i.tag in {'a', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'b', 'br'}:
                     text_tag_count += 1
                     if i.text is not None:
                         word.append(i.text)
@@ -61,16 +61,12 @@ def extract_next_links(url, resp):
                 tag_count += 1
 
             val = ''.join(word)
-            # print(val)
             temp_sim = Simhash(val)
 
             for i in SIMHASH_URLS:
                 if i.distance(temp_sim) <= 4:
                     dup = True
                     break
-
-            print(word_count)
-            print(text_tag_count/tag_count)
 
             # checks to see if the url is able to be fetched in within the domain, based on the robots.txt
 
