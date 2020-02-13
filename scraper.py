@@ -3,8 +3,23 @@ from urllib.parse import urlparse
 from lxml import etree, html
 from simhash import Simhash
 from io import *
+from collections import defaultdict
 
-
+TOKENS = defaultdict(int)
+STOP_WORDS = {'which', 'my', 'all', "when's", 'the', "you'd", 'from', 'be', 'down', 'until', 'by', 'only', "we're",
+              "couldn't", 'your', 'her', 'should', 'but', 'at', 'having', 'ours', 'doing', "who's", 'during', "i've",
+              'those', 'as', 'myself', 'than', 'himself', "i'm", 'very', 'this', "we'd", 'them', 'ourselves', "doesn't",
+              'is', "we'll", "what's", 'had', 'there', "there's", 'a', 'yours', "he's", 'with', "you'll", 'these', 'does',
+              'into', 'not', "that's", "hadn't", "hasn't", "it's", 'she', "why's", 'me', 'against', 'yourselves', 'it',
+              "you're", "he'll", "here's", 'further', 'in', 'own', "i'll", "shouldn't", "they've", "aren't", 'do', 'itself',
+              "wasn't", 'then', "shan't", 'again', 'i', 'were', 'why', 'through', 'more', 'when', "where's", 'once', 'being',
+              'who', "she'll", 'under', 'no', "can't", 'other', "they'll", 'they', 'below', "won't", 'each', 'themselves',
+              'would', 'on', 'both', 'while', 'hers', 'herself', 'cannot', "she's", 'nor', 'over', 'where', 'you', "you've",
+              "how's", 'up', 'how', 'ought', "they'd", 'am', 'what', 'whom', 'above', "i'd", "let's", 'their', 'him', 'after',
+              'was', 'before', 'for', 'did', 'few', "we've", "she'd", 'to', 'because', 'an', 'and', 'he', 'same', 'theirs',
+              'yourself', 'too', "don't", 'could', "wouldn't", "mustn't", 'so', 'such', 'its', 'here', 'are', 'off', 'out',
+              "didn't", 'have', 'his', 'or', "isn't", 'that', 'of', 'our', 'we', 'has', 'if', 'between', 'most', 'some',
+              "they're", "weren't", 'about', 'any', "haven't", "he'd", 'been'}
 SIMHASH_URLS = set()
 BLACKLIST_RESP_TYPES = {'text/calendar'}
 
@@ -12,6 +27,10 @@ BLACKLIST_RESP_TYPES = {'text/calendar'}
 def scraper(url, resp):
     links = extract_next_links(url, resp)
     return [link for link in links if is_valid(link)]
+
+
+def add_token(words):
+    TOKENS[word]+=1
 
 
 def extract_next_links(url, resp):
@@ -68,6 +87,7 @@ def extract_next_links(url, resp):
                     dup = True
                     break
 
+
             # checks to see if the url is able to be fetched in within the domain, based on the robots.txt
 
             # loops through all <a> tag
@@ -79,6 +99,8 @@ def extract_next_links(url, resp):
             # print((word_count+text_tag_count)/(tag_count+word_count))
 
             if word_count > 99 and not dup:
+
+                add_tokens()
 
                 SIMHASH_URLS.add(temp_sim)
 
