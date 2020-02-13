@@ -86,10 +86,11 @@ def extract_next_links(url, resp):
             word = []
 
             # loops through the HTML to obtain all the words, and puts it in a list
+            # "p", "span", "blockquote", "code", "ol", "ins", "sub", "sup", "h1", "h2", "h3", "h4", "h5",
+            # "h6", "li", "ul", "title", "b", "strong", "em", "i", "small", "sub", "sup", "ins", "del",
+            # "mark", "pre", "a", "br"
             for i in root.xpath('/html')[0].getiterator('*'):
-                if i.tag in {"p", "span", "blockquote", "code", "ol", "ins", "sub", "sup", "h1", "h2", "h3", "h4", "h5",
-                             "h6", "li", "ul", "title", "b", "strong", "em", "i", "small", "sub", "sup", "ins", "del",
-                             "mark", "pre", "a", "br"}:
+                if i.tag not in {"script", "style"}:
                     if i.text is not None:
                         word.append(i.text)
 
