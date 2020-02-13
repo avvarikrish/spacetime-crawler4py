@@ -4,398 +4,69 @@
 
 
 
-SEED_URL : https://today.uci.edu/department/information_computer_sciences
-
-
-
-
-
-
 SEED_URL : https://www.stat.uci.edu
-
-
-
-
-
-
-SEED_URL : https://today.uci.edu/department/information_computer_sciences
-
-
-
-
-
-
-SEED_URL : https://www.stat.uci.edu
-
-
-
-
-
-
-SEED_URL : https://today.uci.edu/department/information_computer_sciences
-
-
-
-
-
-
-SEED_URL : https://www.stat.uci.edu
-
-
-
-
-
-
-SEED_URL : https://today.uci.edu/department/information_computer_sciences
-
-
-
-
-
-
-SEED_URL : https://www.stat.uci.edu
-
-
-
-
-
-
-SEED_URL : https://today.uci.edu/department/information_computer_sciences
-
-
-
-
-
-
-SEED_URL : https://www.stat.uci.edu
-
-
-
-
-
-
-SEED_URL : https://www.informatics.uci.edu
-
-
-
-
-
-
-SEED_URL : https://www.cs.uci.edu
-
-
-
-
-
-
-SEED_URL : https://www.ics.uci.edu
-
-
-
-
-
-
-SEED_URL : https://today.uci.edu/department/information_computer_sciences
-
-
-
-
-
-
-SEED_URL : https://www.stat.uci.edu
-
-
-
-
-
-
-SEED_URL : https://www.informatics.uci.edu
-
-
-
-
-
-
-SEED_URL : https://www.cs.uci.edu
-
-
-
-
-
-
-SEED_URL : https://www.ics.uci.edu
-
-
-
-
-
-
-SEED_URL : https://today.uci.edu/department/information_computer_sciences
-
-
-
-
-
-
-SEED_URL : https://www.stat.uci.edu
-
-
-
-
-
-
-SEED_URL : https://www.informatics.uci.edu
+<class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~dgillen/Welcome.html
+<class 'UnicodeDecodeError'> 'utf-8' codec can't decode byte 0xad in position 2991: invalid start byte http://www.ics.uci.edu/~redmiles/ics280-WQ02
+<class 'UnicodeDecodeError'> 'utf-8' codec can't decode byte 0xad in position 3923: invalid start byte http://www.ics.uci.edu/~redmiles/ics229-SQ03
+<class 'UnicodeDecodeError'> 'utf-8' codec can't decode byte 0x92 in position 18022: invalid start byte http://www.ics.uci.edu/~redmiles/ics131-FQ03
+<class 'UnicodeDecodeError'> 'utf-8' codec can't decode byte 0xa0 in position 18786: invalid start byte http://www.ics.uci.edu/~redmiles/ics221-FQ03
+<class 'UnicodeDecodeError'> 'utf-8' codec can't decode byte 0x93 in position 16904: invalid start byte http://www.ics.uci.edu/~redmiles/ics227-SQ04
+<class 'UnicodeDecodeError'> 'utf-8' codec can't decode byte 0xa0 in position 8681: invalid start byte http://www.ics.uci.edu/~redmiles/ics131-FQ04
+<class 'UnicodeDecodeError'> 'utf-8' codec can't decode byte 0xa0 in position 13148: invalid start byte http://www.ics.uci.edu/~redmiles/ics203b-SQ05
+<class 'UnicodeDecodeError'> 'utf-8' codec can't decode byte 0xa0 in position 13198: invalid start byte http://www.ics.uci.edu/~redmiles/ics205-FQ05
+<class 'UnicodeDecodeError'> 'utf-8' codec can't decode byte 0xf6 in position 14423: invalid start byte http://www.ics.uci.edu/~redmiles/ics229-WQ06
+<class 'UnicodeDecodeError'> 'utf-8' codec can't decode byte 0xa0 in position 12124: invalid start byte http://www.ics.uci.edu/~redmiles/ics104-WQ06
+<class 'UnicodeDecodeError'> 'utf-8' codec can't decode byte 0xa0 in position 11986: invalid start byte http://www.ics.uci.edu/~redmiles/inf44-SQ07
+<class 'UnicodeDecodeError'> 'utf-8' codec can't decode byte 0xa0 in position 10180: invalid start byte http://www.ics.uci.edu/~redmiles/inf233-FQ07
+<class 'UnicodeDecodeError'> 'utf-8' codec can't decode byte 0xa0 in position 11575: invalid start byte http://www.ics.uci.edu/~redmiles/inf143-SQ08
+<class 'UnicodeDecodeError'> 'utf-8' codec can't decode byte 0xa0 in position 11383: invalid start byte http://www.ics.uci.edu/~redmiles/inf143-SQ09
 <class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~jajones
-<class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~gmark
+<class 'UnicodeDecodeError'> 'utf-8' codec can't decode byte 0xa0 in position 18363: invalid start byte http://www.ics.uci.edu/~hshirani/webobjects
+<class 'UnicodeDecodeError'> 'utf-8' codec can't decode byte 0xa0 in position 91244: invalid start byte http://www.ics.uci.edu/~cs224
+<class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~emilyo/SimSE
+<class 'UnicodeDecodeError'> 'utf-8' codec can't decode byte 0xa9 in position 3380: invalid start byte http://hobbes.ics.uci.edu
+<class 'UnicodeDecodeError'> 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte https://www.ics.uci.edu/~dutt
 <class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~djr
+<class 'KeyError'> 'content-type' http://www.ics.uci.edu/~yamingy/npmle.r
+<class 'KeyError'> 'content-type' http://www.ics.uci.edu/~yamingy/bayesD_demo3.r
+<class 'KeyError'> 'content-type' http://www.ics.uci.edu/~yamingy/bayesD_demo2.r
+<class 'KeyError'> 'content-type' http://www.ics.uci.edu/~yamingy/bayesD_demo1.r
+<class 'KeyError'> 'content-type' http://www.ics.uci.edu/~yamingy/bayesD_cocktail.r
+<class 'KeyError'> 'content-type' http://www.ics.uci.edu/~yamingy/cocktail_demo4.r
+<class 'KeyError'> 'content-type' http://www.ics.uci.edu/~yamingy/cocktail_demo3.r
+<class 'KeyError'> 'content-type' http://www.ics.uci.edu/~yamingy/cocktail_demo2.r
+<class 'KeyError'> 'content-type' http://www.ics.uci.edu/~yamingy/cocktail_demo1.r
+<class 'KeyError'> 'content-type' http://www.ics.uci.edu/~yamingy/cocktail.r
+<class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~thornton
 <class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~taylor
-<class 'UnicodeDecodeError'> 'utf-8' codec can't decode byte 0xa0 in position 43615: invalid start byte https://www.ics.uci.edu/~sharad
-
-
-
-
-
-
-SEED_URL : https://today.uci.edu/department/information_computer_sciences
-<class 'UnboundLocalError'> local variable 'TOTAL_URL_COUNT' referenced before assignment https://today.uci.edu/department/information_computer_sciences
-
-
-
-
-
-
-SEED_URL : https://www.stat.uci.edu
-<class 'UnboundLocalError'> local variable 'TOTAL_URL_COUNT' referenced before assignment https://www.stat.uci.edu
-
-
-
-
-
-
-SEED_URL : https://www.informatics.uci.edu
-<class 'UnboundLocalError'> local variable 'TOTAL_URL_COUNT' referenced before assignment https://www.informatics.uci.edu
-
-
-
-
-
-
-SEED_URL : https://www.cs.uci.edu
-<class 'UnboundLocalError'> local variable 'TOTAL_URL_COUNT' referenced before assignment https://www.cs.uci.edu
-
-
-
-
-
-
-SEED_URL : https://www.ics.uci.edu
-<class 'UnboundLocalError'> local variable 'TOTAL_URL_COUNT' referenced before assignment https://www.ics.uci.edu
-
-
-
-
-
-
-SEED_URL : https://today.uci.edu/department/information_computer_sciences
-
-
-
-
-
-
-SEED_URL : https://www.stat.uci.edu
-
-
-
-
-
-
-SEED_URL : https://www.informatics.uci.edu
-<class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~jajones
+<class 'UnicodeDecodeError'> 'utf-8' codec can't decode byte 0x96 in position 26885: invalid start byte http://www.ics.uci.edu/~isaac
 <class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~gmark
-<class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~djr
-<class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~taylor
-
-
-
-
-
-
-SEED_URL : https://today.uci.edu/department/information_computer_sciences
-<class 'UnboundLocalError'> local variable 'BIG_PAGE' referenced before assignment https://today.uci.edu/department/information_computer_sciences
-
-
-
-
-
-
-SEED_URL : https://www.stat.uci.edu
-<class 'UnboundLocalError'> local variable 'BIG_PAGE' referenced before assignment https://www.stat.uci.edu
-
-
-
-
-
-
-SEED_URL : https://www.informatics.uci.edu
-<class 'UnboundLocalError'> local variable 'BIG_PAGE' referenced before assignment https://www.informatics.uci.edu
-
-
-
-
-
-
-SEED_URL : https://www.cs.uci.edu
-<class 'UnboundLocalError'> local variable 'BIG_PAGE' referenced before assignment https://www.cs.uci.edu
-
-
-
-
-
-
-SEED_URL : https://www.ics.uci.edu
-<class 'UnboundLocalError'> local variable 'BIG_PAGE' referenced before assignment https://www.ics.uci.edu
-
-
-
-
-
-
-SEED_URL : https://today.uci.edu/department/information_computer_sciences
-
-
-
-
-
-
-SEED_URL : https://www.stat.uci.edu
-
-
-
-
-
-
-SEED_URL : https://www.informatics.uci.edu
-<class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~jajones
-<class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~gmark
-
-
-
-
-
-
-SEED_URL : https://today.uci.edu/department/information_computer_sciences
-
-
-
-
-
-
-SEED_URL : https://www.stat.uci.edu
-
-
-
-
-
-
-SEED_URL : https://www.informatics.uci.edu
-<class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~jajones
-<class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~gmark
-
-
-
-
-
-
-SEED_URL : https://today.uci.edu/department/information_computer_sciences
-
-
-
-
-
-
-SEED_URL : https://www.stat.uci.edu
-
-
-
-
-
-
-SEED_URL : https://www.informatics.uci.edu
-
-
-
-
-
-
-SEED_URL : https://www.cs.uci.edu
-
-
-
-
-
-
-SEED_URL : https://www.ics.uci.edu
-
-
-
-
-
-
-SEED_URL : https://today.uci.edu/department/information_computer_sciences
-
-
-
-
-
-
-SEED_URL : https://www.stat.uci.edu
-
-
-
-
-
-
-SEED_URL : https://www.informatics.uci.edu
-
-
-
-
-
-
-SEED_URL : https://www.cs.uci.edu
-
-
-
-
-
-
-SEED_URL : https://www.ics.uci.edu
-
-
-
-
-
-
-SEED_URL : https://today.uci.edu/department/information_computer_sciences
-
-
-
-
-
-
-SEED_URL : https://www.stat.uci.edu
-
-
-
-
-
-
-SEED_URL : https://www.informatics.uci.edu
-<class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~jajones
-<class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~gmark
-<class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~taylor
-<class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~djr
-<class 'UnicodeDecodeError'> 'utf-8' codec can't decode byte 0xa0 in position 43615: invalid start byte https://www.ics.uci.edu/~sharad
+<class 'UnicodeDecodeError'> 'utf-8' codec can't decode byte 0xe3 in position 14760: invalid continuation byte https://www.ics.uci.edu/faculty/profiles/view_faculty.php?ucinetid=algol
+<class 'UnicodeDecodeError'> 'utf-8' codec can't decode byte 0xb7 in position 16024: invalid start byte http://www.ics.uci.edu/~kibler
+<class 'KeyError'> 'content-type' http://www.ics.uci.edu/%7Eirani/f04-h22/lab6/IllegalTimeValueException.java
+<class 'KeyError'> 'content-type' http://www.ics.uci.edu/%7Eirani/f04-h22/lab6/QueueFullException.java
+<class 'KeyError'> 'content-type' http://www.ics.uci.edu/%7Eirani/f04-h22/lab6/Comparable.java
+<class 'KeyError'> 'content-type' http://www.ics.uci.edu/%7Eirani/f04-h22/lab6/PriorityQueue.java
+<class 'KeyError'> 'content-type' http://www.ics.uci.edu/%7Eirani/f04-h22/lab6/Rider.java
+<class 'KeyError'> 'content-type' http://www.ics.uci.edu/~stasio/winter06/lab5/Event.java
+<class 'KeyError'> 'content-type' http://www.ics.uci.edu/~stasio/winter06/lab5/EventGenerator.java
+<class 'KeyError'> 'content-type' http://www.ics.uci.edu/~stasio/winter06/lab2/GraphicalSavingsCalculator.java
+<class 'KeyError'> 'content-type' http://www.ics.uci.edu/~stasio/winter06/lab2/Input.java
+<class 'KeyError'> 'content-type' http://www.ics.uci.edu/~stasio/winter06/lab2/input.in
+<class 'KeyError'> 'content-type' http://www.ics.uci.edu/~stasio/winter06/lab2/SavingsCalculatorTester.java
+<class 'KeyError'> 'content-type' http://www.ics.uci.edu/~stasio/winter06/lab2/SavingsCalculator.java
+<class 'KeyError'> 'content-type' http://www.ics.uci.edu/~stasio/winter05/lab0/Blink.java
+<class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/%7Ethornton/ics22/LabManual/SettingUpJava.html
+<class 'UnicodeDecodeError'> 'utf-8' codec can't decode byte 0x92 in position 1831: invalid start byte http://www.ics.uci.edu/~stasio/spring04/ics180.html
+<class 'UnicodeDecodeError'> 'utf-8' codec can't decode byte 0x93 in position 10225: invalid start byte http://www.ics.uci.edu/~stasio/fall04/ics268.html
+<class 'UnicodeDecodeError'> 'utf-8' codec can't decode byte 0xe1 in position 14202: invalid continuation byte http://www.ics.uci.edu/~dechter/books/index.html
+<class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~ajfrank
+<class 'UnicodeDecodeError'> 'utf-8' codec can't decode byte 0xf9 in position 4458: invalid start byte http://sli.ics.uci.edu/Site/Search
+<class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~eppstein
+<class 'UnicodeDecodeError'> 'utf-8' codec can't decode byte 0xe1 in position 14202: invalid continuation byte https://www.ics.uci.edu/~dechter/books
+<class 'UnicodeDecodeError'> 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte http://www.ics.uci.edu/%7Emajumder/pub.html
+<class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~franklin
+<class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. https://www.ics.uci.edu/~gmark/Home_page/Welcome.html
 <class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~djr/DebraJRichardson/Home.html
-<class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~gmark/Home_page/Welcome.html
+<class 'UnicodeDecodeError'> 'utf-8' codec can't decode byte 0x92 in position 22754: invalid start byte http://www.ics.uci.edu/%7Edsm/compose/compose_design.html
+<class 'UnicodeDecodeError'> 'utf-8' codec can't decode byte 0x92 in position 2502: invalid start byte http://esl.ics.uci.edu/research.html

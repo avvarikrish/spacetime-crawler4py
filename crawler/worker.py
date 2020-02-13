@@ -4,6 +4,10 @@ from utils.download import download
 from utils import get_logger
 from scraper import scraper, get_all_tokens, BIG_PAGE, ICS_DICT
 from urllib.robotparser import RobotFileParser
+import simhash
+from io import *
+
+from lxml import etree, html
 import time
 
 
@@ -37,7 +41,7 @@ class Worker(Thread):
     def run(self):
         while True:
             tbd_url = self.frontier.get_tbd_url()
-            print(tbd_url)
+            print('TBD', tbd_url)
             if tbd_url in ['https://www.ics.uci.edu','https://www.cs.uci.edu','https://www.informatics.uci.edu','https://www.stat.uci.edu','https://today.uci.edu/department/information_computer_sciences']:
                 with open('Error_file.txt', 'a+') as f:
                     f.write('\n\n\n\n\n\n' + 'SEED_URL : ' + str(tbd_url) + '\n')
@@ -72,7 +76,7 @@ class Worker(Thread):
                     if robot_parser.default_entry is not None:
                         crawl_delay = robot_parser.crawl_delay('*')
                     if crawl_delay is not None:
-                        print(crawl_delay)
+                        print('crawl', crawl_delay)
                         time.sleep(crawl_delay)
                     time.sleep(self.config.time_delay)
             except Exception as e:

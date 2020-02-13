@@ -17,6 +17,7 @@ ICS_DICT = defaultdict(int)
 
 # set of punctuations that we will ignore for tokenizing
 PUNC_SET = set(punctuation)
+print(PUNC_SET)
 
 # english stop words
 STOP_WORDS = {'which', 'my', 'all', "when's", 'the', "you'd", 'from', 'be', 'down', 'until', 'by', 'only', "we're",
@@ -35,7 +36,7 @@ STOP_WORDS = {'which', 'my', 'all', "when's", 'the', "you'd", 'from', 'be', 'dow
               "they're", "weren't", 'about', 'any', "haven't", "he'd", 'been'}
 
 # set of all simhash values
-SIMHASH_URLS = set()
+SIMHASH_URLS = {}
 
 # blacklisting calendar types
 BLACKLIST_RESP_TYPES = {'text/calendar'}
@@ -75,12 +76,9 @@ def extract_next_links(url, resp):
                 f.write(resp_type + ' ' + url + '\n')
 
         print(resp.status)
+        print(resp_type)
         # checks the resp.status and only goes through the if statement if the content type is an html
         if 200 <= resp.status <= 599 and resp_type == 'text/html' and resp.raw_response is not None:
-
-            # adds count to ics dict
-            if '.ics.uci.edu' in parsed.netloc:
-                ICS_DICT[parsed.netloc] += 1
 
             # gets the html root, library calls to parse through html
             html_value = resp.raw_response.content.decode('utf-8')
@@ -108,6 +106,7 @@ def extract_next_links(url, resp):
             for i in SIMHASH_URLS:
                 if i.distance(temp_sim) <= 4:
                     dup = True
+                    print('SIM', SIMHASH_URLS[i])
                     break
 
             # if the file is not a duplicate then check the word count of the file, excluding stop words,
@@ -115,18 +114,15 @@ def extract_next_links(url, resp):
             if not dup:
                 unique_words = []
                 for word in val.split():
-                    if word[-1] in PUNC_SET:
-                        temp = word.strip(word[-1]).lower()
-                        if temp not in STOP_WORDS:
-                            word_count += 1
-                            unique_words.append(temp)
-                    else:
-                        if word.lower() not in STOP_WORDS:
-                            word_count += 1
-                            unique_words.append(word.lower())
-
+                    temp = word.lower()
+                    while len(temp) > 0 and temp[-1] in PUNC_SET:
+                        temp = temp.strip(temp[-1])
+                    if temp not in STOP_WORDS:
+                        word_count += 1
+                        unique_words.append(temp)
+            print('WORD', word_count)
             # checks to see if the url is able to be fetched in within the domain, based on the robots.txt
-            if word_count > 100 and not dup:
+            if word_count > 150 and not dup:
 
                 # function that adds tokens into dict
                 add_tokens(unique_words)
@@ -135,7 +131,12 @@ def extract_next_links(url, resp):
                 if len(unique_words) > BIG_PAGE[1]:
                     BIG_PAGE[0], BIG_PAGE[1] = [url, len(unique_words)]
 
-                SIMHASH_URLS.add(temp_sim)
+                # adds count to ics dict
+                if '.ics.uci.edu' in parsed.netloc:
+                    ICS_DICT[parsed.netloc] += 1
+
+                # SIMHASH_URLS.add(temp_sim)
+                SIMHASH_URLS[temp_sim] = url
 
                 for i in root.xpath('/html')[0].getiterator('a'):
 
