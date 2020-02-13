@@ -4,8 +4,14 @@ from lxml import etree, html
 from simhash import Simhash
 from io import *
 from collections import defaultdict
+from string import punctuation
 
+# global IMPORTANT_URL_COUNT = 0
+# global TOTAL_URL_COUNT = 0
+BIG_PAGE = [0, 0]
 TOKENS = defaultdict(int)
+ICS_DICT = defaultdict(int)
+PUNC_SET = set(punctuation)
 STOP_WORDS = {'which', 'my', 'all', "when's", 'the', "you'd", 'from', 'be', 'down', 'until', 'by', 'only', "we're",
               "couldn't", 'your', 'her', 'should', 'but', 'at', 'having', 'ours', 'doing', "who's", 'during', "i've",
               'those', 'as', 'myself', 'than', 'himself', "i'm", 'very', 'this', "we'd", 'them', 'ourselves', "doesn't",
@@ -29,8 +35,18 @@ def scraper(url, resp):
     return [link for link in links if is_valid(link)]
 
 
-def add_token(words):
-    TOKENS[word]+=1
+def get_all_tokens():
+    return TOKENS
+
+#
+# def inc_total_urls():
+#     TOTAL_URL_COUNT+=1
+
+
+def add_tokens(words):
+
+    for w in words:
+        TOKENS[w] += 1
 
 
 def extract_next_links(url, resp):
@@ -40,6 +56,7 @@ def extract_next_links(url, resp):
     final = []
 
     try:
+        print(BIG_PAGE)
         # separate the url into important parts for parsing
         parsed = urlparse(url)
         resp_type = ''
@@ -53,7 +70,9 @@ def extract_next_links(url, resp):
         print(resp.status)
         # checks the resp.status and only goes through the if statement if the content type is an html
         if 200 <= resp.status <= 599 and resp_type == 'text/html' and resp.raw_response is not None:
-
+            # TOTAL_URL_COUNT += 1
+            if 'ics.uci.edu' in parsed.netloc:
+                ICS_DICT[parsed.scheme + '://' + parsed.netloc] += 1
             # gets the html root, library calls to parse through html
             html_value = resp.raw_response.content.decode('utf-8')
             parser = etree.HTMLParser()
@@ -63,44 +82,50 @@ def extract_next_links(url, resp):
             # creates a robots url for the parser
             # variables initialized for word and tag count, determining if pages are relevant or not
             dup = False
-            tag_count = 0
-            text_tag_count = 0
             word_count = 0
             word = []
 
+            # loops through the HTML to obtain all the words, and puts it in a list
             for i in root.xpath('/html')[0].getiterator('*'):
-                # print(i.tag)
                 if i.tag in {"p", "span", "blockquote", "code", "ol", "ins", "sub", "sup", "h1", "h2", "h3", "h4", "h5",
                              "h6", "li", "ul", "title", "b", "strong", "em", "i", "small", "sub", "sup", "ins", "del",
                              "mark", "pre", "a", "br"}:
-                    text_tag_count += 1
                     if i.text is not None:
                         word.append(i.text)
-                        word_count += len(i.text.split())
-                tag_count += 1
 
+            # keeps a variable of a string of all the words to create a Simhash value
             val = ''.join(word)
             temp_sim = Simhash(val)
 
+            # checks if there are any duplicates or near duplicates in the Simhash set
             for i in SIMHASH_URLS:
                 if i.distance(temp_sim) <= 4:
                     dup = True
                     break
 
+            # if the file is not a duplicate then check the word count of the file, excluding stop words,
+            # and add the tokens to a list to add to a global dictionary later.
+            if not dup:
+                unique_words = []
+                for word in val.split():
+                    if word[-1] in PUNC_SET:
+                        temp = word.strip(word[-1]).lower()
+                        if temp not in STOP_WORDS:
+                            word_count += 1
+                            unique_words.append(temp)
+                    else:
+                        if word.lower() not in STOP_WORDS:
+                            word_count += 1
+                            unique_words.append(word.lower())
 
             # checks to see if the url is able to be fetched in within the domain, based on the robots.txt
 
-            # loops through all <a> tag
-            # for i in root.xpath('/html')[0].getiterator('p'):
-            #     print(i.text)
-            # if word_count >= 200:
-            # print(word_count, 'word count')
-            # print(tag_count, 'tag count')
-            # print((word_count+text_tag_count)/(tag_count+word_count))
-
-            if word_count > 99 and not dup:
-
-                add_tokens()
+            if word_count > 320 and not dup:
+                # print(TOKENS)
+                # IMPORTANT_URL_COUNT += 1
+                add_tokens(unique_words)
+                if len(unique_words) > BIG_PAGE[1]:
+                    BIG_PAGE[0], BIG_PAGE[1] = [url, len(unique_words)]
 
                 SIMHASH_URLS.add(temp_sim)
 

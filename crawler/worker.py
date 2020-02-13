@@ -2,7 +2,7 @@ from threading import Thread
 from urllib.parse import urlparse
 from utils.download import download
 from utils import get_logger
-from scraper import scraper
+from scraper import scraper, get_all_tokens, BIG_PAGE, ICS_DICT
 from urllib.robotparser import RobotFileParser
 import time
 
@@ -13,10 +13,10 @@ class Worker(Thread):
         self.config = config
         self.frontier = frontier
         self.robots = {}
+        self.TOTAL_URL_COUNT = 0
         super().__init__(daemon=True)
 
     # def read_robot(self, text_file, content_type):
-
 
     def add_robot(self, base_url):
 
@@ -42,6 +42,11 @@ class Worker(Thread):
                 with open('Error_file.txt', 'a+') as f:
                     f.write('\n\n\n\n\n\n' + 'SEED_URL : ' + str(tbd_url) + '\n')
             if not tbd_url:
+                print('TOTAL URL:', self.TOTAL_URL_COUNT)
+                # print('IMPORTANT URL:', IMPORTANT_URL_COUNT)
+                print('BIG PAGE:', BIG_PAGE)
+                print('TOKENS', sorted(get_all_tokens().items(), key=lambda x: -x[1])[0:50])
+                print('ICS_DICT:', ICS_DICT)
                 self.logger.info("Frontier is empty. Stopping Crawler.")
                 break
             try:
@@ -58,6 +63,7 @@ class Worker(Thread):
                     for scraped_url in scraped_urls:
                         self.frontier.add_url(scraped_url)
                     self.frontier.mark_url_complete(tbd_url)
+                    self.TOTAL_URL_COUNT += 1
                     crawl_delay = None
                     if robot_parser.default_entry is not None:
                         crawl_delay = robot_parser.crawl_delay('*')

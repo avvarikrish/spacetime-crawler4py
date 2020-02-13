@@ -1,0 +1,401 @@
+
+
+
+
+
+
+SEED_URL : https://today.uci.edu/department/information_computer_sciences
+
+
+
+
+
+
+SEED_URL : https://www.stat.uci.edu
+
+
+
+
+
+
+SEED_URL : https://today.uci.edu/department/information_computer_sciences
+
+
+
+
+
+
+SEED_URL : https://www.stat.uci.edu
+
+
+
+
+
+
+SEED_URL : https://today.uci.edu/department/information_computer_sciences
+
+
+
+
+
+
+SEED_URL : https://www.stat.uci.edu
+
+
+
+
+
+
+SEED_URL : https://today.uci.edu/department/information_computer_sciences
+
+
+
+
+
+
+SEED_URL : https://www.stat.uci.edu
+
+
+
+
+
+
+SEED_URL : https://today.uci.edu/department/information_computer_sciences
+
+
+
+
+
+
+SEED_URL : https://www.stat.uci.edu
+
+
+
+
+
+
+SEED_URL : https://www.informatics.uci.edu
+
+
+
+
+
+
+SEED_URL : https://www.cs.uci.edu
+
+
+
+
+
+
+SEED_URL : https://www.ics.uci.edu
+
+
+
+
+
+
+SEED_URL : https://today.uci.edu/department/information_computer_sciences
+
+
+
+
+
+
+SEED_URL : https://www.stat.uci.edu
+
+
+
+
+
+
+SEED_URL : https://www.informatics.uci.edu
+
+
+
+
+
+
+SEED_URL : https://www.cs.uci.edu
+
+
+
+
+
+
+SEED_URL : https://www.ics.uci.edu
+
+
+
+
+
+
+SEED_URL : https://today.uci.edu/department/information_computer_sciences
+
+
+
+
+
+
+SEED_URL : https://www.stat.uci.edu
+
+
+
+
+
+
+SEED_URL : https://www.informatics.uci.edu
+<class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~jajones
+<class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~gmark
+<class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~djr
+<class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~taylor
+<class 'UnicodeDecodeError'> 'utf-8' codec can't decode byte 0xa0 in position 43615: invalid start byte https://www.ics.uci.edu/~sharad
+
+
+
+
+
+
+SEED_URL : https://today.uci.edu/department/information_computer_sciences
+<class 'UnboundLocalError'> local variable 'TOTAL_URL_COUNT' referenced before assignment https://today.uci.edu/department/information_computer_sciences
+
+
+
+
+
+
+SEED_URL : https://www.stat.uci.edu
+<class 'UnboundLocalError'> local variable 'TOTAL_URL_COUNT' referenced before assignment https://www.stat.uci.edu
+
+
+
+
+
+
+SEED_URL : https://www.informatics.uci.edu
+<class 'UnboundLocalError'> local variable 'TOTAL_URL_COUNT' referenced before assignment https://www.informatics.uci.edu
+
+
+
+
+
+
+SEED_URL : https://www.cs.uci.edu
+<class 'UnboundLocalError'> local variable 'TOTAL_URL_COUNT' referenced before assignment https://www.cs.uci.edu
+
+
+
+
+
+
+SEED_URL : https://www.ics.uci.edu
+<class 'UnboundLocalError'> local variable 'TOTAL_URL_COUNT' referenced before assignment https://www.ics.uci.edu
+
+
+
+
+
+
+SEED_URL : https://today.uci.edu/department/information_computer_sciences
+
+
+
+
+
+
+SEED_URL : https://www.stat.uci.edu
+
+
+
+
+
+
+SEED_URL : https://www.informatics.uci.edu
+<class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~jajones
+<class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~gmark
+<class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~djr
+<class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~taylor
+
+
+
+
+
+
+SEED_URL : https://today.uci.edu/department/information_computer_sciences
+<class 'UnboundLocalError'> local variable 'BIG_PAGE' referenced before assignment https://today.uci.edu/department/information_computer_sciences
+
+
+
+
+
+
+SEED_URL : https://www.stat.uci.edu
+<class 'UnboundLocalError'> local variable 'BIG_PAGE' referenced before assignment https://www.stat.uci.edu
+
+
+
+
+
+
+SEED_URL : https://www.informatics.uci.edu
+<class 'UnboundLocalError'> local variable 'BIG_PAGE' referenced before assignment https://www.informatics.uci.edu
+
+
+
+
+
+
+SEED_URL : https://www.cs.uci.edu
+<class 'UnboundLocalError'> local variable 'BIG_PAGE' referenced before assignment https://www.cs.uci.edu
+
+
+
+
+
+
+SEED_URL : https://www.ics.uci.edu
+<class 'UnboundLocalError'> local variable 'BIG_PAGE' referenced before assignment https://www.ics.uci.edu
+
+
+
+
+
+
+SEED_URL : https://today.uci.edu/department/information_computer_sciences
+
+
+
+
+
+
+SEED_URL : https://www.stat.uci.edu
+
+
+
+
+
+
+SEED_URL : https://www.informatics.uci.edu
+<class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~jajones
+<class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~gmark
+
+
+
+
+
+
+SEED_URL : https://today.uci.edu/department/information_computer_sciences
+
+
+
+
+
+
+SEED_URL : https://www.stat.uci.edu
+
+
+
+
+
+
+SEED_URL : https://www.informatics.uci.edu
+<class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~jajones
+<class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~gmark
+
+
+
+
+
+
+SEED_URL : https://today.uci.edu/department/information_computer_sciences
+
+
+
+
+
+
+SEED_URL : https://www.stat.uci.edu
+
+
+
+
+
+
+SEED_URL : https://www.informatics.uci.edu
+
+
+
+
+
+
+SEED_URL : https://www.cs.uci.edu
+
+
+
+
+
+
+SEED_URL : https://www.ics.uci.edu
+
+
+
+
+
+
+SEED_URL : https://today.uci.edu/department/information_computer_sciences
+
+
+
+
+
+
+SEED_URL : https://www.stat.uci.edu
+
+
+
+
+
+
+SEED_URL : https://www.informatics.uci.edu
+
+
+
+
+
+
+SEED_URL : https://www.cs.uci.edu
+
+
+
+
+
+
+SEED_URL : https://www.ics.uci.edu
+
+
+
+
+
+
+SEED_URL : https://today.uci.edu/department/information_computer_sciences
+
+
+
+
+
+
+SEED_URL : https://www.stat.uci.edu
+
+
+
+
+
+
+SEED_URL : https://www.informatics.uci.edu
+<class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~jajones
+<class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~gmark
+<class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~taylor
+<class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~djr
+<class 'UnicodeDecodeError'> 'utf-8' codec can't decode byte 0xa0 in position 43615: invalid start byte https://www.ics.uci.edu/~sharad
+<class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~djr/DebraJRichardson/Home.html
+<class 'ValueError'> Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration. http://www.ics.uci.edu/~gmark/Home_page/Welcome.html
