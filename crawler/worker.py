@@ -42,11 +42,15 @@ class Worker(Thread):
                 with open('Error_file.txt', 'a+') as f:
                     f.write('\n\n\n\n\n\n' + 'SEED_URL : ' + str(tbd_url) + '\n')
             if not tbd_url:
+                # print statements for report
                 print('TOTAL URL:', self.TOTAL_URL_COUNT)
-                # print('IMPORTANT URL:', IMPORTANT_URL_COUNT)
+                print()
                 print('BIG PAGE:', BIG_PAGE)
+                print()
                 print('TOKENS', sorted(get_all_tokens().items(), key=lambda x: -x[1])[0:50])
-                print('ICS_DICT:', ICS_DICT)
+                print()
+                print('ICS_DICT:', sorted(ICS_DICT.items(), key=lambda x: x[0]))
+                print()
                 self.logger.info("Frontier is empty. Stopping Crawler.")
                 break
             try:

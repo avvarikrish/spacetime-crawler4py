@@ -6,12 +6,19 @@ from io import *
 from collections import defaultdict
 from string import punctuation
 
-# global IMPORTANT_URL_COUNT = 0
-# global TOTAL_URL_COUNT = 0
+# largest page in crawl, in a list form
 BIG_PAGE = [0, 0]
+
+# dictionary of tokens
 TOKENS = defaultdict(int)
+
+# dictionary of all ics urls
 ICS_DICT = defaultdict(int)
+
+# set of punctuations that we will ignore for tokenizing
 PUNC_SET = set(punctuation)
+
+# english stop words
 STOP_WORDS = {'which', 'my', 'all', "when's", 'the', "you'd", 'from', 'be', 'down', 'until', 'by', 'only', "we're",
               "couldn't", 'your', 'her', 'should', 'but', 'at', 'having', 'ours', 'doing', "who's", 'during', "i've",
               'those', 'as', 'myself', 'than', 'himself', "i'm", 'very', 'this', "we'd", 'them', 'ourselves', "doesn't",
@@ -26,7 +33,11 @@ STOP_WORDS = {'which', 'my', 'all', "when's", 'the', "you'd", 'from', 'be', 'dow
               'yourself', 'too', "don't", 'could', "wouldn't", "mustn't", 'so', 'such', 'its', 'here', 'are', 'off', 'out',
               "didn't", 'have', 'his', 'or', "isn't", 'that', 'of', 'our', 'we', 'has', 'if', 'between', 'most', 'some',
               "they're", "weren't", 'about', 'any', "haven't", "he'd", 'been'}
+
+# set of all simhash values
 SIMHASH_URLS = set()
+
+# blacklisting calendar types
 BLACKLIST_RESP_TYPES = {'text/calendar'}
 
 
@@ -35,28 +46,24 @@ def scraper(url, resp):
     return [link for link in links if is_valid(link)]
 
 
+# returns all tokens
 def get_all_tokens():
     return TOKENS
 
-#
-# def inc_total_urls():
-#     TOTAL_URL_COUNT+=1
 
-
+# adds token to global dictionary
 def add_tokens(words):
 
     for w in words:
-        TOKENS[w] += 1
+        if w is not '':
+            TOKENS[w] += 1
 
 
 def extract_next_links(url, resp):
 
-    # Implementation required.
-    # print(url ,' ------------------------------------------- ')
     final = []
 
     try:
-        print(BIG_PAGE)
         # separate the url into important parts for parsing
         parsed = urlparse(url)
         resp_type = ''
@@ -70,9 +77,11 @@ def extract_next_links(url, resp):
         print(resp.status)
         # checks the resp.status and only goes through the if statement if the content type is an html
         if 200 <= resp.status <= 599 and resp_type == 'text/html' and resp.raw_response is not None:
-            # TOTAL_URL_COUNT += 1
-            if 'ics.uci.edu' in parsed.netloc:
-                ICS_DICT[parsed.scheme + '://' + parsed.netloc] += 1
+
+            # adds count to ics dict
+            if '.ics.uci.edu' in parsed.netloc:
+                ICS_DICT[parsed.netloc] += 1
+
             # gets the html root, library calls to parse through html
             html_value = resp.raw_response.content.decode('utf-8')
             parser = etree.HTMLParser()
@@ -86,9 +95,6 @@ def extract_next_links(url, resp):
             word = []
 
             # loops through the HTML to obtain all the words, and puts it in a list
-            # "p", "span", "blockquote", "code", "ol", "ins", "sub", "sup", "h1", "h2", "h3", "h4", "h5",
-            # "h6", "li", "ul", "title", "b", "strong", "em", "i", "small", "sub", "sup", "ins", "del",
-            # "mark", "pre", "a", "br"
             for i in root.xpath('/html')[0].getiterator('*'):
                 if i.tag not in {"script", "style"}:
                     if i.text is not None:
@@ -120,11 +126,12 @@ def extract_next_links(url, resp):
                             unique_words.append(word.lower())
 
             # checks to see if the url is able to be fetched in within the domain, based on the robots.txt
+            if word_count > 100 and not dup:
 
-            if word_count > 320 and not dup:
-                # print(TOKENS)
-                # IMPORTANT_URL_COUNT += 1
+                # function that adds tokens into dict
                 add_tokens(unique_words)
+
+                # checks and changes the highest text volume page
                 if len(unique_words) > BIG_PAGE[1]:
                     BIG_PAGE[0], BIG_PAGE[1] = [url, len(unique_words)]
 
