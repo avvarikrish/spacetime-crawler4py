@@ -2,7 +2,7 @@ from threading import Thread
 from urllib.parse import urlparse
 from utils.download import download
 from utils import get_logger
-from scraper import scraper, get_all_tokens, BIG_PAGE, ICS_DICT
+from scraper import scraper, get_all_tokens, BIG_PAGE, ICS_DICT, IMPORTANT_URLS
 from urllib.robotparser import RobotFileParser
 import simhash
 from io import *
@@ -48,6 +48,8 @@ class Worker(Thread):
             if not tbd_url:
                 # print statements for report
                 print('TOTAL URL:', self.TOTAL_URL_COUNT)
+                print()
+                print('IMPORTANT_URLS', IMPORTANT_URLS[0])
                 print()
                 print('BIG PAGE:', BIG_PAGE)
                 print()

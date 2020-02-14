@@ -9,6 +9,8 @@ from string import punctuation
 # largest page in crawl, in a list form
 BIG_PAGE = [0, 0]
 
+IMPORTANT_URLS = [0]
+
 # dictionary of tokens
 TOKENS = defaultdict(int)
 
@@ -91,6 +93,7 @@ def extract_next_links(url, resp):
             dup = False
             word_count = 0
             word = []
+            unique_words = []
 
             # loops through the HTML to obtain all the words, and puts it in a list
             for i in root.xpath('/html')[0].getiterator('*'):
@@ -104,7 +107,7 @@ def extract_next_links(url, resp):
 
             # checks if there are any duplicates or near duplicates in the Simhash set
             for i in SIMHASH_URLS:
-                if i.distance(temp_sim) <= 4:
+                if i.distance(temp_sim) <= 3:
                     dup = True
                     print('SIM', SIMHASH_URLS[i])
                     break
@@ -112,18 +115,22 @@ def extract_next_links(url, resp):
             # if the file is not a duplicate then check the word count of the file, excluding stop words,
             # and add the tokens to a list to add to a global dictionary later.
             if not dup:
-                unique_words = []
                 for word in val.split():
                     temp = word.lower()
-                    while len(temp) > 0 and temp[-1] in PUNC_SET:
+                    char_number = ord(temp[-1]) if len(temp) > 0 else 0
+                    while len(temp) > 0 and not ((97 <= char_number <= 122) or (48 <= char_number <= 57)):
                         temp = temp.strip(temp[-1])
-                    if temp not in STOP_WORDS:
-                        word_count += 1
+                        char_number = ord(temp[-1]) if len(temp) > 0 else 0
+                    char_number = ord(temp[0]) if len(temp) > 0 else 0
+                    while len(temp) > 0 and not ((97 <= char_number <= 122) or (48 <= char_number <= 57)):
+                        temp = temp.strip(temp[0])
+                        char_number = ord(temp[0]) if len(temp) > 0 else 0
+                    if temp not in STOP_WORDS and temp != '':
                         unique_words.append(temp)
             print('WORD', word_count)
             # checks to see if the url is able to be fetched in within the domain, based on the robots.txt
             if word_count > 150 and not dup:
-
+                IMPORTANT_URLS[0] += 1
                 # function that adds tokens into dict
                 add_tokens(unique_words)
 
