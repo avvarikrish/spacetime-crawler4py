@@ -57,6 +57,8 @@ class Worker(Thread):
                 print()
                 print('ICS_DICT:', sorted(ICS_DICT.items(), key=lambda x: x[0]))
                 print()
+                print('LENGTH OF ICS_DICT', len(ICS_DICT))
+                print()
                 self.logger.info("Frontier is empty. Stopping Crawler.")
                 break
             try:
