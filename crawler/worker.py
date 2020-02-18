@@ -42,9 +42,9 @@ class Worker(Thread):
         while True:
             tbd_url = self.frontier.get_tbd_url()
             print('TBD', tbd_url)
-            if tbd_url in ['https://www.ics.uci.edu','https://www.cs.uci.edu','https://www.informatics.uci.edu','https://www.stat.uci.edu','https://today.uci.edu/department/information_computer_sciences']:
-                with open('Error_file.txt', 'a+') as f:
-                    f.write('\n\n\n\n\n\n' + 'SEED_URL : ' + str(tbd_url) + '\n')
+            # if tbd_url in ['https://www.ics.uci.edu','https://www.cs.uci.edu','https://www.informatics.uci.edu','https://www.stat.uci.edu','https://today.uci.edu/department/information_computer_sciences']:
+            #     with open('Error_file.txt', 'a+') as f:
+            #         f.write('\n\n\n\n\n\n' + 'SEED_URL : ' + str(tbd_url) + '\n')
             if not tbd_url:
                 # print statements for report
                 print('TOTAL URL:', self.TOTAL_URL_COUNT)
@@ -62,20 +62,38 @@ class Worker(Thread):
                 self.logger.info("Frontier is empty. Stopping Crawler.")
                 break
             try:
+                # obtains url from frontier, then also adds the robots.txt of the domain.
                 parsed = urlparse(tbd_url)
                 base_url = parsed.scheme + '://' + parsed.netloc + '/robots.txt'
+
                 print('BASE_URL', base_url)
+
+                # function call that reads the robots.txt
                 robot_parser = self.add_robot(base_url)
+
+                # checks to see if the user agent is valid in the robots.txt, then downloads and scrapes
+                # the url if it is allowed to
                 if robot_parser.default_entry is None or (robot_parser.default_entry is not None and robot_parser.can_fetch('*', tbd_url)):
+
+                    # downloads url
                     resp = download(tbd_url, self.config, self.logger)
                     self.logger.info(
                         f"Downloaded {tbd_url}, status <{resp.status}>, "
                         f"using cache {self.config.cache_server}.")
+
+                    # function call to scraper that scrapes the url and obtains a list of valid links from the url
                     scraped_urls = scraper(tbd_url, resp)
+
+                    # iterates through the list of scraped urls, and adds them to the frontier
                     for scraped_url in scraped_urls:
                         self.frontier.add_url(scraped_url)
+
+                    # marks the url downloaded as completed, to prevent duplicates and infinite loops
                     self.frontier.mark_url_complete(tbd_url)
                     self.TOTAL_URL_COUNT += 1
+
+                    # parses through the robots.txt to check if there is a crawl delay, and delays the crawl
+                    # if there exists a delay.
                     crawl_delay = None
                     if robot_parser.default_entry is not None:
                         crawl_delay = robot_parser.crawl_delay('*')
@@ -85,5 +103,5 @@ class Worker(Thread):
                     time.sleep(self.config.time_delay)
             except Exception as e:
                 print('ERROR OCCURED')
-                with open('Error_file.txt', 'a+') as f:
-                    f.write(str(type(e)) + ' ' + str(e) + ' ' + tbd_url + '\n')
+                # with open('Error_file.txt', 'a+') as f:
+                #     f.write(str(type(e)) + ' ' + str(e) + ' ' + tbd_url + '\n')

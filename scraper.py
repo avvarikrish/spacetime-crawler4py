@@ -6,6 +6,57 @@ from io import *
 from collections import defaultdict
 from string import punctuation
 
+# CITATION FOR LMXL
+# Copyright (c) 2004 Infrae. All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are
+# met:
+# 1.   Redistributions of source code must retain the above copyright
+#      notice, this list of conditions and the following disclaimer.
+#
+# 2.   Redistributions in binary form must reproduce the above copyright
+#      notice, this list of conditions and the following disclaimer in
+#      the documentation and/or other materials provided with the
+#      distribution.
+#
+# 3.   Neither the name of Infrae nor the names of its contributors may
+#      be used to endorse or promote products derived from this software
+#      without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL INFRAE OR
+# CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+# EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+# PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+# PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+# LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+# NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+# SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+# CITATION FOR SIMHASH
+# The MIT License (MIT)
+#
+# Copyright (c) 2013 1e0n
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy of
+# this software and associated documentation files (the "Software"), to deal in
+# the Software without restriction, including without limitation the rights to
+# use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+# the Software, and to permit persons to whom the Software is furnished to do so,
+# subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+# FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+# COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+# IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+# CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 # largest page in crawl, in a list form
 BIG_PAGE = [0, 0]
 
@@ -22,6 +73,7 @@ PUNC_SET = set(punctuation)
 print(PUNC_SET)
 
 # english stop words
+# stop word list can be found here https://www.ranks.nl/stopwords
 STOP_WORDS = {'which', 'my', 'all', "when's", 'the', "you'd", 'from', 'be', 'down', 'until', 'by', 'only', "we're",
               "couldn't", 'your', 'her', 'should', 'but', 'at', 'having', 'ours', 'doing', "who's", 'during', "i've",
               'those', 'as', 'myself', 'than', 'himself', "i'm", 'very', 'this', "we'd", 'them', 'ourselves', "doesn't",
@@ -64,6 +116,9 @@ def add_tokens(words):
 
 def extract_next_links(url, resp):
 
+    # This method uses the lmxl library from Infrae. The original code can be found at https://github.com/lxml/lxml/
+    # This method uses the simhash library from 1e0n. The original code can be found at https://github.com/leonsim/simhash
+
     final = []
 
     try:
@@ -74,8 +129,8 @@ def extract_next_links(url, resp):
         # finds the content type of the url
         if resp.raw_response is not None and resp.raw_response.headers['Content-Type'] is not None:
             resp_type = resp.raw_response.headers['Content-Type'].split(';')[0]
-            with open('response_types.txt', 'a+') as f:
-                f.write(resp_type + ' ' + url + '\n')
+            # with open('response_types.txt', 'a+') as f:
+            #     f.write(resp_type + ' ' + url + '\n')
 
         print(resp.status)
         print(resp_type)
@@ -170,8 +225,8 @@ def extract_next_links(url, resp):
 
     except Exception as e:
         print('ERROR OCCURED')
-        with open('Error_file.txt', 'a+') as f:
-            f.write(str(type(e)) + ' ' + str(e) + ' ' + str(url) + '\n')
+        # with open('Error_file.txt', 'a+') as f:
+        #     f.write(str(type(e)) + ' ' + str(e) + ' ' + str(url) + '\n')
     finally:
         return final
 
