@@ -102,7 +102,7 @@ def extract_next_links(url, resp):
                         word.append(i.text)
 
             # keeps a variable of a string of all the words to create a Simhash value
-            val = ''.join(word)
+            val = ' '.join(word)
             temp_sim = Simhash(val)
 
             # checks if there are any duplicates or near duplicates in the Simhash set
@@ -126,6 +126,7 @@ def extract_next_links(url, resp):
                         temp = temp.strip(temp[0])
                         char_number = ord(temp[0]) if len(temp) > 0 else 0
                     if temp not in STOP_WORDS and temp != '':
+                        word_count += 1
                         unique_words.append(temp)
             print('WORD', word_count)
             # checks to see if the url is able to be fetched in within the domain, based on the robots.txt
